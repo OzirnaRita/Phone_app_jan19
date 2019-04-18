@@ -1,3 +1,5 @@
+Link to GitHub pages https://ozirnarita.github.io/fe_on_jan19/
+
 ## Welcome to GitHub Pages
 
 You can use the [editor on GitHub](https://github.com/OzirnaRita/fe_on_jan19/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
