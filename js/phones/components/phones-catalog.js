@@ -11,14 +11,10 @@ export default class PhonesCatalog extends Component{
        this.onPhoneSelected = onPhoneSelected;
        this._render();
 
-       this._element.addEventListener('click', event => {
-          const phoneEl = event.target.closest('[data-element="phone-element"]');
-          if (!phoneEl) {
-              return;
-          }
-          const phoneId = phoneEl.dataset.phoneId;
-          this.onPhoneSelected(phoneId);
-
+       this.on('click', '[data-element="details-link"]', (event) => {
+           const phoneEl = event.target.closest('[data-element="phone-element"]');
+           const phoneId = phoneEl.dataset.phoneId;
+           this.onPhoneSelected(phoneId);
        })
     }
 
@@ -32,7 +28,11 @@ export default class PhonesCatalog extends Component{
                 data-element="phone-element"
                 data-phone-id=${phone.id}
                 >
-                    <a href="#!/phones/motorola-xoom-with-wi-fi" class="thumb">
+                    <a 
+                    href="#!/phones/motorola-xoom-with-wi-fi" 
+                    class="thumb"
+                    data-element="details-link"
+                    >
                     <img alt="${phone.name}™ with Wi-Fi" src="${phone.imageUrl}">
                     </a>
 
@@ -42,8 +42,14 @@ export default class PhonesCatalog extends Component{
                     </a>
                     </div>
 
-                <a href="#!/phones/motorola-xoom-with-wi-fi">${phone.name}</a>
-                <p>${phone.snippet}</li>
+                    <a 
+                    data-element="details-link"
+                    href="#!/phones/motorola-xoom-with-wi-fi"
+                    >
+                    ${phone.name}
+                    </a>
+                    <p>${phone.snippet}
+                </li>
             `).join('')
         }
       </ul>
