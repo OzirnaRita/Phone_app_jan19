@@ -5,20 +5,28 @@ export default class PhonesCatalog extends Component{
        element, 
        phones = []
     }) {
-       super({ element });
-       this._phones = phones;
-       this._render();
 
-       this.on('click', '[data-element="details-link"]', (event) => {
+         super({ element });
+         this._phones = phones;
+         this._render();
+
+         this.on('click', '[data-element="details-link"]', (event) => {
            const phoneEl = event.target.closest('[data-element="phone-element"]');
            const phoneId = phoneEl.dataset.phoneId;
            this.emit('phone-selected', phoneId);
-       })
-    }
+         })
+
+         this.on('click', '[data-element="add-to-cart"]', (event) => {
+           const phoneEl = event.target.closest('[data-element="phone-element"]');
+           const phoneId = phoneEl.dataset.phoneId;
+           this.emit('add-phone', phoneId);
+         })
+            
+}
 
     _render() {
      this._element.innerHTML = `
-      <ul class="phones">
+        <ul class="phones">
         ${
             this._phones.map(phone => `
                 <li 
@@ -35,8 +43,11 @@ export default class PhonesCatalog extends Component{
                     </a>
 
                     <div class="phones__btn-buy-wrapper">
-                    <a class="btn btn-success">
-                    Add
+                    <a 
+                    class="btn btn-success"
+                    data-element="add-to-cart"
+                    >
+                       Add
                     </a>
                     </div>
 
@@ -51,6 +62,6 @@ export default class PhonesCatalog extends Component{
             `).join('')
         }
       </ul>
-      `
+     `
     }
 }
