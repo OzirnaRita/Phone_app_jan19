@@ -11,5 +11,5 @@ function debounce(f, delay) {
        timer = setTimeout(() => {
            f.call(this, ...args);
        }, delay)
-   }
+    }
 }

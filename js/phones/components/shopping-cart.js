@@ -23,7 +23,7 @@ export default class ShoppingCart extends Component {
     }
 
 
-     remove(phone) {
+    remove(phone) {
         if (this._items.hasOwnProperty(phone)) {
             this._items[phone] -= 1;
         }

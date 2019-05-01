@@ -25,9 +25,11 @@ export default class PhonesPage {
 
     this._catalog.subscribe('phone-selected', (id) =>{
       console.log('Selected: ', id);
-      const phoneDetails = PhonesService.getById(id);
-      this._catalog.hide();
-      this._viewer.show(phoneDetails);
+      PhonesService.getById(id).then((phoneDetails) => {
+        this._catalog.hide();
+        this._viewer.show(phoneDetails);
+      })
+     
     })
 
     this._catalog.subscribe('add-phone', (phoneId) => {
@@ -38,12 +40,12 @@ export default class PhonesPage {
 
   _initViewer() {
     this._viewer = new PhoneViewer({
-       element: this._element.querySelector('[data-component="phone-viewer"]')
+      element: this._element.querySelector('[data-component="phone-viewer"]')
     })
 
     this._viewer.subscribe('back', () => {
-       this._showPhones();
-       this._viewer.hide();
+      this._showPhones();
+      this._viewer.hide();
     })
 
     this._viewer.subscribe('add-phone', (phoneId) => {
@@ -62,22 +64,21 @@ export default class PhonesPage {
       element: this._element.querySelector('[data-component="filter"]')
     })
     
-    this._filter.subscribe('query-change', (eventData) => {
+    this._filter.subscribe('query-change', () => {
      this._showPhones();
     })
 
-    this._filter.subscribe('order-change', (eventData) => {
+    this._filter.subscribe('order-change', () => {
       this._showPhones();
     })
 
   }
   
   _showPhones() {
-     this._currentFiltering = this._filter.getCurrent();
-     const phones = PhonesService.getAll(this._currentFiltering);
-     console.log('showing phones by criteria:', this._currentFiltering);
-     this._catalog.show(phones);
-
+    this._currentFiltering = this._filter.getCurrent();
+    PhonesService.getAll(this._currentFiltering).then((phones) => {
+    this._catalog.show(phones);
+    })
   }
 
   _render() {
